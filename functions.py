@@ -1,7 +1,7 @@
 import itertools
 import pandas as pd
 import numpy as np
-file = pd.read_csv("C:\\Users\\wikto\\OneDrive\\Pulpit\\uczelnia\\sem6\\Licencjat\\archive\\MementoML.csv")
+file = pd.read_csv("MementoML.csv")
 
 def get_datasets_all_indexes(file, model):
     """ Get all datasets from file on which all param_indexes have been tested
