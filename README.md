@@ -26,7 +26,7 @@ https://doi.org/10.48550/arXiv.2008.13162)* . These portfolios represent a colle
    Implements the algorithm from *Sequential Model-Free Hyperparameter Tuning* to sequentially select hyperparameters that optimize ranks across datasets.
 
 2. **Portfolio Loading**  
-   Easily load the pre-constructed portfolios from `portfolios.csv` to perform further experiments or analyses.
+   Easily load the pre-constructed portfolios from the portfolios folder to perform further experiments or analyses.
 
 ## Future Work
 
