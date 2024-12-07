@@ -1,4 +1,3 @@
-library("mlr")
 portfolio_auc <- read.table("portfolios_auc.csv", header=TRUE, sep = ",")
 
 write.portfolio <- function(param.indexes, portfolio, file.name){
@@ -19,7 +18,7 @@ kknn.param.indexes <-  read.table("archive\\parameters\\kknn_params.csv", header
 write.portfolio(kknn.param.indexes, portfolio_auc$kknn, "portfolio_auc_kknn.csv")
 
 #randomForest
-rf.param.indexes <-  read.table("archive\\parameters\\gbm_params.csv", header=TRUE, sep = ",")
+rf.param.indexes <-  read.table("archive\\parameters\\randomForest_params.csv", header=TRUE, sep = ",")
 write.portfolio(rf.param.indexes, portfolio_auc$randomForest, "portfolio_auc_randomForest.csv")
 
 #glmnet
