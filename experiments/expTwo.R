@@ -1,3 +1,5 @@
+# This all is still in development stage. Some codes are pointless and stored for memory of losses, so that bad decisions do not repeat.
+
 library(farff)
 library("mlr3")
 library("mlr")
@@ -6,7 +8,6 @@ library("mlr3extralearners")
 # Reading ARFF file
 arff_data <- readARFF("irish.arff")
 data <- na.omit(arff_data)
-
 
 ############################################
 ####     ASMFO OPTIMIZATION RESULTS     ####
