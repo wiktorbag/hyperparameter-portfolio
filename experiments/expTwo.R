@@ -4,7 +4,7 @@ library("mlr")
 library("randomForest")
 library("mlr3extralearners")
 # Reading ARFF file
-arff_data <- readARFF("C:\\Users\\wikto\\Downloads\\irish.arff")
+arff_data <- readARFF("irish.arff")
 data <- na.omit(arff_data)
 
 
