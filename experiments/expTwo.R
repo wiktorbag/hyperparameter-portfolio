@@ -154,5 +154,51 @@ irish_aucs_rf_rand <- random_search(task, data, "classif.randomForest")
 irish_aucs_gbm_rand <- random_search(task, data, "classif.gbm")
 irish_aucs_kknn_rand <- random_search(task, data, "classif.kknn")
 
+############################################
+###  GRID SEARCH OPTIMIZATION RESULTS    ###
+############################################
 
+generate_grid <- function(model) {
+  if (model == "classif.randomForest") {
+    # Generate the grid
+    grid <- expand.grid(
+      hp_conf_index = 1,
+      ntree = c(120, 800, 4000),
+      nodesize = seq(1, 4, by = 1),
+      replace = c(TRUE, FALSE)
+    )
+  }
+  
+  if (model == "classif.gbm") {
+    grid <- expand.grid(
+      hp_conf_index = 1,
+      n.trees = c(120, 800, 4000),
+      interaction.depth = c(2, 4),
+      n.minobsinnode = c(5, 15),
+      shrinkage = c(0.001, 0.1)
+    )
+  }
+  
+  if (model == "classif.kknn") {
+    grid <- expand.grid(
+      hp_conf_index = 1,
+      k = seq(1, 20, by = 1)
+    )
+  }
+  grid_subset <- grid[1:20, ]
+  return(grid_subset)
+}
+
+grid_search <- function(task, data, model, n = 20) {
+  grid <- generate_grid(model)
+  aucs_grid <- numeric(n)
+  for(i in 1:n){
+    aucs_grid[i] <- get.ith.auc(i, grid, model, data, task)
+  }
+  cbind(grid, aucs_grid)
+}
+
+irish_aucs_rf_grid <- grid_search(task, data, "classif.randomForest")
+irish_aucs_gbm_grid <- grid_search(task, data, "classif.gbm")
+irish_aucs_kknn_grid <- grid_search(task, data, "classif.kknn")
 
