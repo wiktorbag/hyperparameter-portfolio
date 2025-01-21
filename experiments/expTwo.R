@@ -98,6 +98,17 @@ for(i in 1:n){
   irish_aucs_kknn[i] <- get.ith.auc(i, portfolio_auc_kknn, "classif.kknn", data, task)
 }
 
+asfmo_search <- function(task, data, model, portfolio_name, n=20) {
+  portfolio_auc <- read.table(portfolio_name, header=TRUE, sep = ",")
+  aucs <- numeric(n)
+  for(i in 1:n){
+    aucs[i] <- get.ith.auc(i, portfolio_auc, model, data, task)
+  }
+  aucs
+}
+
+irish_aucs_gbm_1 <- asfmo_search(task, data, "classif.gbm", "portfolio_auc_gbm.csv")
+# coś nie działa calssif.kknn
 
 ############################################
 ##  RANDOM SEARCH OPTIMIZATION RESULTS    ##
