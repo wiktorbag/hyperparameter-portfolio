@@ -15,6 +15,7 @@ arff_data <- readARFF("irish.arff")
 data <- na.omit(arff_data)
 data <- one.hot.encode(data)
 data[[3]] <- as.factor(data[[3]])
+colnames(data) <- gsub("-", ".", colnames(data))
 task <- TaskClassif$new(id = "irish", backend = data, target = colnames(data)[3])
 
 datasets[["451"]] <- data
