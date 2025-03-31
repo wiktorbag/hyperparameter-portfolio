@@ -122,3 +122,10 @@ grid_search <- function(task, data, model, n = 20) {
   }
   cbind(grid, aucs_grid)[, -1]
 }
+
+## for datasets preparations
+one.hot.encode <- function(df) {
+non_numeric_cols <- names(df)[sapply(df, function(col) !is.numeric(col))]
+df_fastdummies <- dummy_cols(df, select_columns = non_numeric_cols, remove_selected_columns = TRUE, remove_first_dummy = TRUE)
+df_fastdummies
+}
