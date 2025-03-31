@@ -1,15 +1,28 @@
 ## functions for evaluation of hyperparmeter portfolios constructed using ASMFO
 
-get.ith.auc <- function(i, portfolio_auc, model, data, task){
+get.ith.auc <- function(i, portfolio_auc, model, data, task) {
+  result <- tryCatch({
+    # Define learner and other processing steps
+    learner <- lrn(model)
+    row_as_list <- as.list(portfolio_auc[i, -1, drop = FALSE])
+    learner$param_set$values <- row_as_list
+    learner$predict_type <- "prob"
+    
+    # Set up cross-validation
+    cv5 <- rsmp("cv", folds = 5)
+    
+    # Perform resampling and calculate AUC
+    rr <- mlr3::resample(task = task, learner = learner, resampling = cv5)
+    
+    # Return the AUC score
+    rr$aggregate(msr("classif.auc"))
+  }, error = function(e) {
+    
+    print(paste("Error:", e$message))
+    return(NaN)
+  })
   
-  learner <- lrn(model)
-  row_as_list <- as.list(portfolio_auc[i, -1, drop = FALSE])
-  learner$param_set$values = row_as_list
-  learner$predict_type <- "prob"
-  
-  cv5 <- rsmp("cv", folds = 5)
-  rr <- mlr3::resample(task= task, learner=learner,resampling = cv5)
-  rr$aggregate(msr("classif.auc"))
+  return(result)
 }
 
 asfmo_search <- function(task, data, model, portfolio_name, n=20) {
