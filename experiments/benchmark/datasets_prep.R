@@ -101,10 +101,10 @@ tasks[["56"]] <- task56
 arff_data <- readARFF("dataset_13_breast-cancer.arff")
 data_13 <- na.omit(arff_data)
 colnames(data_13)
-colnames(data_13) <- gsub("-", ".", colnames(data_13))
 data_13 <- one.hot.encode(data_13)
 colnames(data_13)[ncol(data_13)] <- "Class"
 data_13[[ncol(data_13)]] <- as.factor(data_13[[ncol(data_13)]])
+colnames(data_13) <- gsub("-", ".", colnames(data_13))
 task13 <- TaskClassif$new(id = "13", backend = data_13, target = "Class")
 
 datasets[["13"]] <- data_13
