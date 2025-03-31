@@ -5,7 +5,7 @@ library("randomForest")
 library("mlr3extralearners")
 library("mlr3learners")
 library(fastDummies)
-source(functions.R)
+source("functions.R")
 
 datasets <- list()
 tasks <- list()
@@ -122,4 +122,20 @@ task55 <- TaskClassif$new(id = "55", backend = data_55, target = "Class")
 
 datasets[["55"]] <- data_55
 tasks[["55"]] <- task55
-               
+
+
+ids <- c("13", "53", "56", "55", "41830", "451", "41797", "42882", "40589", "43")
+models <- c("classif.randomForest", "classif.gbm", "classif.kknn", "classif.glmnet")
+types <- c("random", "grid")
+
+  
+for (model in models) {
+    for (type in types) {
+      name.file <- paste0(gsub("^classif\\.", "", model), "_", type, ".csv")
+      write.results(tasks, datasets, ids, model, type, name.file, n = 20)
+    }
+}
+write.asmfo.results(tasks, datasets, ids, "classif.randomForest", "portfolio_auc_randomForest.csv", "randomForestASMFOresults.csv")
+write.asmfo.results(tasks, datasets, ids, "classif.kknn", "portfolio_auc_kknn.csv", "kknnASMFOresults.csv")
+write.asmfo.results(tasks, datasets, ids, "classif.gbm", "portfolio_auc_gbm.csv", "gbmASMFOresults.csv")
+write.asmfo.results(tasks, datasets, ids, "classif.glmnet", "portfolio_auc_glmnet.csv", "glmnetASMFOresults.csv")
