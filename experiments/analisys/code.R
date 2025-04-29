@@ -70,7 +70,7 @@ zrob_wykres <- function(random, gird, asmfo, titleStr){
     labs(
       title = titleStr,
       x = "Number of Trials",
-      y = "Average performance loss"
+      y = "Average AUC loss"
     ) +
     theme_classic(base_size = 20) +  
     theme(
