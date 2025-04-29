@@ -86,7 +86,7 @@ zrob_wykres("glmnet_random.csv", "glmnet_grid.csv", "glmnetASMFOresults.csv", "g
 
 
 make_data_ranks <- function(asmfo, rand, grid){
-  n <- length(rand[[id]])
+  n <- length(rand[["X53"]])
   
   asmfo <- asmfo[, colnames(grid)]
   asmfo <- replace.nas(asmfo)
