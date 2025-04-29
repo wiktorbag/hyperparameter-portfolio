@@ -35,9 +35,11 @@ get_maxs <- function(df1, df2, df3){
 }
 
 zrob_wykres <- function(random, gird, asmfo, titleStr){
-  asmfo_data <- read.csv(random)
+  asmfo_data <- read.csv(asmfo)
   grid_data <- read.csv(gird)
-  rand_data <- read.csv(asmfo)
+  rand_data <- read.csv(random)
+  asmfo_data <- asmfo_data[, colnames(grid_data)]
+  rand_data <- rand_data[, colnames(grid_data)]
   
   asmfo_data <- replace.nas(asmfo_data)
   grid_data <- replace.nas(grid_data)
@@ -51,14 +53,18 @@ zrob_wykres <- function(random, gird, asmfo, titleStr){
     asmfo = abs(get_column(asmfo_data, maxes))
   )
   df_long <- melt(df, id.vars = "row", variable.name = "Method", value.name = "Value")
-  max_value <- ceiling(max(df_long$Value) * 100) / 100  
+  max_value <- ceiling(max(df_long$Value) * 100) / 100  # Rounds up to nearest 0.01
   
+  # Define sequences for hlines (0 to max_value in steps of 0.01) and vlines (every 5 steps)
   hline_seq <- seq(0, max_value, by = 0.01)
   vline_seq <- seq(0, 20, by = 5)
-  
-  ggplot(df_long, aes(x = row, y = Value, color = Method, group = Method)) +
+  # Plot with ggplot2
+  p <- ggplot(df_long, aes(x = row, y = Value, color = Method, group = Method)) +
+    # Add evenly spaced horizontal and vertical grid lines
     geom_hline(yintercept = hline_seq, color = "gray85", linetype = "dashed", linewidth = 0.3) +
     geom_vline(xintercept = vline_seq, color = "gray85", linetype = "dashed", linewidth = 0.3) +
+    
+    # Main plot
     geom_line(linewidth = 1.2) +  
     geom_point(size = 2) +  
     labs(
@@ -75,15 +81,13 @@ zrob_wykres <- function(random, gird, asmfo, titleStr){
       legend.title = element_blank()  
     ) +
     scale_color_manual(values = c("#2A9D8F", "#457B9D", "#E63946")) 
+  return(p)
 }
-
-
-zrob_wykres("gbm_random.csv", "gbm_grid.csv", "gbmASMFOresults.csv", "gbm")
-zrob_wykres("randomForest_random.csv", "randomForest_grid.csv", "randomForestASMFOresults.csv", "Random Forest")
-zrob_wykres("kknn_random.csv", "kknn_grid.csv", "kknnASMFOresults.csv", "kknn")
-zrob_wykres("glmnet_random.csv", "glmnet_grid.csv", "glmnetASMFOresults.csv", "glmnet")
-
-
+p1 <- zrob_wykres("gbm_random.csv", "gbm_grid.csv", "gbmASMFOresults.csv", "gbm")
+p2 <- zrob_wykres("randomForest_random.csv", "randomForest_grid.csv", "randomForestASMFOresults.csv", "Random Forest")
+p3 <- zrob_wykres("kknn_random.csv", "kknn_grid.csv", "kknnASMFOresults.csv", "kknn")
+p4 <- zrob_wykres("glmnet_random.csv", "glmnet_grid.csv", "glmnetASMFOresults.csv", "glmnet")
+grid.arrange(p1, p2, p3, p4, ncol = 2)
 
 make_data_ranks <- function(asmfo, rand, grid){
   n <- length(rand[["X53"]])
