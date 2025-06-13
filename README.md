@@ -28,9 +28,15 @@ https://doi.org/10.48550/arXiv.2008.13162)* . These portfolios represent a colle
 2. **Portfolio Loading**  
    Easily load the pre-constructed portfolios from the portfolios folder to perform further experiments or analyses.
 
-## Future Work
+### `experiments/`
 
-- Conduct experiments to evaluate the performance of the constructed portfolios on unseen datasets.  
+This folder houses the various experimental procedures and their outcomes, divided into two main subdirectories:
+
+* **`analysis/`**: This directory contains the scripts and data related to the in-depth analysis of benchmark results. You'll find R scripts and Jupyter Notebooks used for processing and interpreting the experimental data.
+    * **`analysis/plots/`**: Within the `analysis` folder, this subdirectory is dedicated to storing the visualizations and plots generated from the data analysis, providing insights into the experimental findings.
+
+* **`benchmark/`**: This directory is dedicated to the evaluation of different hyperparameter optimization strategies. Here, you'll find the code and results for assessing the performance of hyperparameter portfolios, as well as comparisons against traditional methods like grid search and random search.
+
+## Future Work
 - Extend the portfolio construction to include additional models and datasets.  
 - Explore alternative optimization strategies for hyperparameter selection.  
-- Visualize the performance of hyperparameter portfolios using detailed plots and comparisons.
